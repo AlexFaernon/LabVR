@@ -7,8 +7,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class BloodSample : MonoBehaviour
 {
-    public BloodType BloodType { get; private set; }
-    public bool Rh { get; private set; }
+    public BloodClass BloodClass { get; private set; }
     [SerializeField] private GameObject notSeparatedContent;
     [SerializeField] private GameObject separatedContent;
     [SerializeField] private GameObject cap;
@@ -17,7 +16,8 @@ public class BloodSample : MonoBehaviour
 
     private void Awake()
     {
-        _contentColliders = GetComponentsInChildren<Collider>().Where(collider => collider.isTrigger);
+        BloodClass = new BloodClass();
+        _contentColliders = GetComponentsInChildren<Collider>().Where(collider1 => collider1.isTrigger);
         foreach (var contentCollider in _contentColliders)
         {
             contentCollider.enabled = false;

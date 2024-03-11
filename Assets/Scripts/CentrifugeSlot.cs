@@ -18,11 +18,11 @@ public class CentrifugeSlot : MonoBehaviour
 			if (_bloodSample is null) return;
 			
 			_tubeJoint = _bloodSample.AddComponent<FixedJoint>();
-			_tubeJoint.connectedAnchor = transform.position;
 			_tubeJoint.connectedBody = _centrifugeRigidbody;
-			_tubeJoint.enablePreprocessing = false;
 			_bloodSample.GetComponent<Rigidbody>().isKinematic = true;
+			
 			_bloodSample.transform.position = transform.position;
+			_bloodSample.transform.rotation = transform.rotation;
 			_bloodSample.GetComponent<XRGrabInteractable>().selectEntered.AddListener(DetachSample);
 		}
 	}

@@ -2,5 +2,11 @@
 {
 	None,
 	Plasma,
-	FormedElements
+	FormedElements,
+	AntiA,
+	AntiB,
+	AntiD,
+	ErythrocyteA,
+	ErythrocyteB,
+	Erythrocyte0
 }
