@@ -7,7 +7,6 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class CentrifugeSlot : MonoBehaviour
 {
 	private BloodSample _bloodSample;
-	private FixedJoint _tubeJoint;
 	private Rigidbody _centrifugeRigidbody;
 	public BloodSample BloodSample
 	{
@@ -17,13 +16,7 @@ public class CentrifugeSlot : MonoBehaviour
 			_bloodSample = value;
 			if (_bloodSample is null) return;
 			
-			_tubeJoint = _bloodSample.AddComponent<FixedJoint>();
-			_tubeJoint.connectedBody = _centrifugeRigidbody;
-			_bloodSample.GetComponent<Rigidbody>().isKinematic = true;
-			
-			_bloodSample.transform.position = transform.position;
-			_bloodSample.transform.rotation = transform.rotation;
-			_bloodSample.GetComponent<XRGrabInteractable>().selectEntered.AddListener(DetachSample);
+			_bloodSample.GetComponent<ObjectAttacher>().AttachToObject(transform, _centrifugeRigidbody, DetachSample);
 		}
 	}
 
@@ -40,12 +33,8 @@ public class CentrifugeSlot : MonoBehaviour
 		}
 	}
 
-	private void DetachSample(SelectEnterEventArgs arg0)
+	private void DetachSample()
 	{
-		BloodSample.GetComponent<XRGrabInteractable>().selectEntered.RemoveListener(DetachSample);
-		Destroy(_tubeJoint);
-		_bloodSample.GetComponent<Rigidbody>().isKinematic = false;
 		BloodSample = null;
-		_tubeJoint = null;
 	}
 }

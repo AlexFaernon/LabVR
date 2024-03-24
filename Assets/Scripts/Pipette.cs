@@ -11,8 +11,8 @@ public class Pipette : MonoBehaviour
 	private Dropper _dropper;
 	private DropperContent Content
 	{
-		get => _dropper.Content;
-		set => _dropper.Content = value;
+		get => _dropper.content;
+		set => _dropper.content = value;
 	}
 
 	private GameObject _targetTube;
