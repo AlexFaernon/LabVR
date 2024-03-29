@@ -20,6 +20,6 @@ public class RhButtonLabeler : MonoBehaviour
 
     private void Update()
     {
-        _buttonLabel.color = _tubeLabeler.labelRh == rh ? Color.green : Color.white;
+        _buttonLabel.color = _tubeLabeler.labelRh == rh && _tubeLabeler.BloodSample is not null ? Color.green : Color.white;
     }
 }

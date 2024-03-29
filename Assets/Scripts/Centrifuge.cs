@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Centrifuge : MonoBehaviour
 {
-	private CentrifugeSlot[] _centrifugeSlots;
+	private TubeSlot[] _centrifugeSlots;
 
 	private void Awake()
 	{
-		_centrifugeSlots = GetComponentsInChildren<CentrifugeSlot>();
+		_centrifugeSlots = GetComponentsInChildren<TubeSlot>();
 	}
 
 	private void OnCollisionEnter(Collision other)
@@ -29,7 +29,10 @@ public class Centrifuge : MonoBehaviour
 	{
 		foreach (var centrifugeSlot in _centrifugeSlots)
 		{
-			centrifugeSlot.SeparateSample();
+			if (centrifugeSlot.BloodSample is not null)
+			{
+				centrifugeSlot.BloodSample.isSeparated = true;
+			}
 		}
 		Debug.Log("Samples separated");
 	}

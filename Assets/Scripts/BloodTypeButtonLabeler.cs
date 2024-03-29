@@ -20,6 +20,6 @@ public class BloodTypeButtonLabeler : MonoBehaviour
 
     private void Update()
     {
-        _buttonLabel.color = _tubeLabeler.labelBloodType == bloodType ? Color.green : Color.white;
+        _buttonLabel.color = _tubeLabeler.labelBloodType == bloodType && _tubeLabeler.BloodSample is not null ? Color.green : Color.white;
     }
 }

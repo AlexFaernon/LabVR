@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 public class BloodClass
 {
@@ -7,14 +9,37 @@ public class BloodClass
 
 	public BloodClass()
 	{
-		var random = new Random();
-		BloodType = (BloodType)Enum.GetValues(typeof(BloodType)).GetValue(random.Next(4));
-		Rh = random.Next(2) == 0;
+		var bloodClass = new BloodClass(new[] { BloodType.O, BloodType.A, BloodType.B, BloodType.AB }, new[] { false, true });
+		BloodType = bloodClass.BloodType;
+		Rh = bloodClass.Rh;
 	}
 
+	public BloodClass(IEnumerable<BloodType> allowedBloodTypes, IEnumerable<bool> allowedRh)
+	{
+		var random = new Random();
+		
+		var bloodTypes = allowedBloodTypes.ToList();
+		BloodType = bloodTypes.ElementAt(random.Next(bloodTypes.Count));
+		
+		var rh = allowedRh.ToList();
+		Rh = rh.ElementAt(random.Next(rh.Count));
+	}
+	
 	public BloodClass(BloodType bloodType, bool rh)
 	{
 		BloodType = bloodType;
 		Rh = rh;
+	}
+
+	public override bool Equals(object obj)
+	{
+		if (obj is not BloodClass other) return false;
+
+		return BloodType == other.BloodType && Rh == other.Rh;
+	}
+	
+	public override int GetHashCode()
+	{
+		return HashCode.Combine((int)BloodType, Rh);
 	}
 }

@@ -2600,6 +2600,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Tablet Control",
+            "id": "46302308-24a4-488f-9db5-cffb03703453",
+            "actions": [
+                {
+                    "name": "Switch pages",
+                    "type": "Value",
+                    "id": "fc820248-152d-4961-b363-2d7462540ad5",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "382b6b0c-f087-4514-a43f-ea81cf2c6ff3",
+                    "path": "*/{Primary2DAxis}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Switch pages",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

@@ -4,10 +4,11 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class CentrifugeSlot : MonoBehaviour
+
+public class TubeSlot : MonoBehaviour
 {
 	private BloodSample _bloodSample;
-	private Rigidbody _centrifugeRigidbody;
+	private Rigidbody _parentRigidbody;
 	public BloodSample BloodSample
 	{
 		get => _bloodSample;
@@ -16,21 +17,13 @@ public class CentrifugeSlot : MonoBehaviour
 			_bloodSample = value;
 			if (_bloodSample is null) return;
 			
-			_bloodSample.GetComponent<ObjectAttacher>().AttachToObject(transform, _centrifugeRigidbody, DetachSample);
+			_bloodSample.GetComponent<ObjectAttacher>().AttachToObject(transform, _parentRigidbody, DetachSample);
 		}
 	}
 
 	private void Awake()
 	{
-		_centrifugeRigidbody = GetComponentInParent<Rigidbody>();
-	}
-	
-	public void SeparateSample()
-	{
-		if (BloodSample is not null)
-		{
-			BloodSample.isSeparated = true;
-		}
+		_parentRigidbody = GetComponentInParent<Rigidbody>();
 	}
 
 	private void DetachSample()

@@ -8,7 +8,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class BloodSample : MonoBehaviour
 {
-    public BloodClass BloodClass { get; private set; }
+    public BloodClass BloodClass;
     public BloodClass AssumedBloodClass;
     [SerializeField] private GameObject notSeparatedContent;
     [SerializeField] private GameObject separatedContent;
@@ -19,8 +19,6 @@ public class BloodSample : MonoBehaviour
 
     private void Awake()
     {
-        BloodClass = new BloodClass();
-        Debug.Log($"Blood sample group:{BloodClass.BloodType} rh:{BloodClass.Rh}");
         _contentColliders = GetComponentsInChildren<Collider>().Where(collider1 => collider1.isTrigger);
         foreach (var contentCollider in _contentColliders)
         {
@@ -29,6 +27,11 @@ public class BloodSample : MonoBehaviour
         GetComponent<XRGrabInteractable>().activated.AddListener(SwitchCap);
         _label = GetComponentInChildren<TMP_Text>();
         _label.gameObject.SetActive(false);
+    }
+
+    private void Start()
+    {
+        Debug.Log($"Blood sample group:{BloodClass.BloodType} rh:{BloodClass.Rh}");
     }
 
     private void Update()
