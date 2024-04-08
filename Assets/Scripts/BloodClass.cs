@@ -7,13 +7,6 @@ public class BloodClass
 	public readonly BloodType BloodType;
 	public readonly bool Rh;
 
-	public BloodClass()
-	{
-		var bloodClass = new BloodClass(new[] { BloodType.O, BloodType.A, BloodType.B, BloodType.AB }, new[] { false, true });
-		BloodType = bloodClass.BloodType;
-		Rh = bloodClass.Rh;
-	}
-
 	public BloodClass(IEnumerable<BloodType> allowedBloodTypes, IEnumerable<bool> allowedRh)
 	{
 		var random = new Random();

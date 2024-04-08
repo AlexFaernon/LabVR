@@ -28,12 +28,7 @@ public class BloodSample : MonoBehaviour
         _label = GetComponentInChildren<TMP_Text>();
         _label.gameObject.SetActive(false);
     }
-
-    private void Start()
-    {
-        Debug.Log($"Blood sample group:{BloodClass.BloodType} rh:{BloodClass.Rh}");
-    }
-
+    
     private void Update()
     {
         notSeparatedContent.SetActive(!isSeparated);
@@ -51,5 +46,10 @@ public class BloodSample : MonoBehaviour
         {
             contentCollider.enabled = !cap.activeSelf;
         }
+    }
+    
+    private void Start()
+    {
+        Debug.Log($"Blood sample group:{BloodClass.BloodType} rh:{BloodClass.Rh}");
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
@@ -10,6 +11,7 @@ public class InfoTablet : MonoBehaviour
 {
 	[SerializeField] private InputActionReference switchPages;
 	[SerializeField] private Transform pagesParent;
+	[SerializeField] private TMP_Text pageCount;
 
 	private int _currentPageNumber;
 	private DynamicMoveProvider _moveProvider;
@@ -28,6 +30,7 @@ public class InfoTablet : MonoBehaviour
 			{
 				page.gameObject.SetActive(page.GetSiblingIndex() == CurrentPageNumber);
 			}
+			pageCount.text = $"{CurrentPageNumber + 1} / {pagesParent.childCount}";
 		}
 	}
 
@@ -69,12 +72,14 @@ public class InfoTablet : MonoBehaviour
 	
 	private void SwitchPage(InputAction.CallbackContext context)
 	{
+		if (_grabInteractable.firstInteractorSelecting is null) return;
+		
 		var value = context.ReadValue<Vector2>().x;
 		if (value > 0.8f && CurrentPageNumber < pagesParent.childCount - 1)
 		{
 			CurrentPageNumber++;
 		}
-		else if (value < -0.8 && CurrentPageNumber > 0)
+		else if (value < -0.8f && CurrentPageNumber > 0)
 		{
 			CurrentPageNumber--;
 		}

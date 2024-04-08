@@ -7,9 +7,20 @@ public class TabletHole : MonoBehaviour
 {
     private readonly HashSet<BloodClass> _plasma = new();
     private readonly HashSet<BloodClass> _formedElements = new();
-    private readonly HashSet<DropperContent> _content = new();
-    private bool _isAgglutinated;
-
+    public HashSet<DropperContent> Content { get; } = new();
+    private bool _readyToAgglutinate;
+    public bool IsAgglutinated { get; private set; }
+    private float _stirringDistance;
+    private Vector3 _lastStirringRodPos;
+    
+    private void Update()
+    {
+        if (_readyToAgglutinate && _stirringDistance >= 0.15f)
+        {
+            IsAgglutinated = true;
+        }
+    }
+    
     public void Fill(DropperContent newContent, BloodClass bloodClass = null)
     {
         if (newContent is DropperContent.Plasma or DropperContent.FormedElements && bloodClass is null)
@@ -23,29 +34,58 @@ public class TabletHole : MonoBehaviour
             case DropperContent.None:
                 break;
             case DropperContent.Plasma:
+                Content.Add(newContent);
                 _plasma.Add(bloodClass);
-                _isAgglutinated = _isAgglutinated || AgglutinationChecker.PlasmaAndErythrocyte(_plasma, _content);
+                _readyToAgglutinate = _readyToAgglutinate || AgglutinationChecker.PlasmaAndErythrocyte(_plasma, Content);
                 break;
             case DropperContent.FormedElements:
+                Content.Add(newContent);
                 _formedElements.Add(bloodClass);
-                _isAgglutinated = _isAgglutinated || AgglutinationChecker.FormedElementsAndAntiGenes(_formedElements, _content);
+                _readyToAgglutinate = _readyToAgglutinate || AgglutinationChecker.FormedElementsAndAntiGenes(_formedElements, Content);
                 break;
             case DropperContent.AntiA:
             case DropperContent.AntiB:
             case DropperContent.AntiD:
-                _content.Add(newContent);
-                _isAgglutinated = _isAgglutinated || AgglutinationChecker.FormedElementsAndAntiGenes(_formedElements, _content);
+                Content.Add(newContent);
+                _readyToAgglutinate = _readyToAgglutinate || AgglutinationChecker.FormedElementsAndAntiGenes(_formedElements, Content);
                 break;
             case DropperContent.ErythrocyteA:
             case DropperContent.ErythrocyteB:
             case DropperContent.Erythrocyte0:
-                _content.Add(newContent);
-                _isAgglutinated = _isAgglutinated || AgglutinationChecker.PlasmaAndErythrocyte(_plasma, _content);
+                Content.Add(newContent);
+                _readyToAgglutinate = _readyToAgglutinate || AgglutinationChecker.PlasmaAndErythrocyte(_plasma, Content);
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
         }
         
-        Debug.Log($"Agglutination: {_isAgglutinated}");
+        Debug.Log($"Agglutination: {_readyToAgglutinate}");
+    }
+
+    public void Clear()
+    {
+        _plasma.Clear();
+        _formedElements.Clear();
+        Content.Clear();
+        _readyToAgglutinate = false;
+        IsAgglutinated = false;
+        _stirringDistance = 0;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!other.CompareTag("Stirring Rod") || !_readyToAgglutinate) return;
+
+        _lastStirringRodPos = other.transform.position;
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (!other.CompareTag("Stirring Rod") || !_readyToAgglutinate) return;
+
+        var stirringRodPos = other.transform.position;
+        _stirringDistance += (stirringRodPos - _lastStirringRodPos).magnitude;
+        _lastStirringRodPos = stirringRodPos;
+        Debug.Log(_stirringDistance);
     }
 }

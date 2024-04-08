@@ -1,12 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public class Dropper : MonoBehaviour
 {
+    public int dropsLeft = int.MaxValue;
     public DropperContent content;
     public BloodClass BloodClass;
     private GameObject _target;
@@ -21,7 +23,11 @@ public class Dropper : MonoBehaviour
         if (_target is null) return;
 
         _target.GetComponent<TabletHole>().Fill(content, BloodClass);
-        content = DropperContent.None;
+        dropsLeft--;
+        if (dropsLeft == 0)
+        {
+            content = DropperContent.None;
+        }
     }
 
     private void OnTriggerStay(Collider other)

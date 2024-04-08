@@ -7,7 +7,6 @@ public class Pipette : MonoBehaviour
 {
 	[SerializeField] private Material formedElements;
 	[SerializeField] private Material plasma;
-	public BloodClass BloodClass { get; private set; }
 	private Dropper _dropper;
 	private DropperContent Content
 	{
@@ -40,9 +39,10 @@ public class Pipette : MonoBehaviour
 
 	private void Pickup(ActivateEventArgs arg0)
 	{
-		if (_targetTube is null) return;
+		if (_targetTube is null || _dropper.content != DropperContent.None) return;
 		
 		_dropper.BloodClass = _targetTube.GetComponentInParent<BloodSample>().BloodClass;
+		_dropper.dropsLeft = 3;
 		switch (_targetTube.tag)
 		{
 			case "Plasma":

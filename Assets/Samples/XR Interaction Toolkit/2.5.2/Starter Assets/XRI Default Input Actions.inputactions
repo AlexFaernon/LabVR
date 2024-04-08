@@ -2622,7 +2622,7 @@
                     "path": "*/{Primary2DAxis}",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Generic XR Controller",
                     "action": "Switch pages",
                     "isComposite": false,
                     "isPartOfComposite": false

@@ -14,6 +14,7 @@ public class TubeSupport : MonoBehaviour
     [SerializeField] private Toggle toggleRhNeg;
     [SerializeField] private Toggle toggleRhPos;
     [SerializeField] private Button getButton;
+    private WarningWindowFade _warningWindowFade;
     private TubeSlot[] _tubeSlots;
     private bool AnyBloodTypeSelected => toggle0.isOn || toggleA.isOn || toggleB.isOn || toggleAB.isOn;
     private bool AnyRhSelected => toggleRhNeg.isOn || toggleRhPos.isOn;
@@ -21,6 +22,8 @@ public class TubeSupport : MonoBehaviour
     private void Awake()
     {
         _tubeSlots = GetComponentsInChildren<TubeSlot>();
+        _warningWindowFade = GetComponentInChildren<WarningWindowFade>();
+        _warningWindowFade.gameObject.SetActive(false);
         getButton.onClick.AddListener(SpawnBloodSampleIfAvailable);
     }
 
@@ -37,11 +40,10 @@ public class TubeSupport : MonoBehaviour
 
             tubeSlot.BloodSample = Instantiate(bloodSamplePrefab).GetComponent<BloodSample>();
             tubeSlot.BloodSample.BloodClass = GenerateBloodClass();
-            //return true;
             return;
         }
-
-        //return false;
+        
+        _warningWindowFade.gameObject.SetActive(true);
     }
 
     private BloodClass GenerateBloodClass()
