@@ -6,28 +6,28 @@ using UnityEngine.Serialization;
 
 public class TubeLabeler : MonoBehaviour
 {
-    [SerializeField] private Transform attachPoint;
     public BloodType labelBloodType;
     public bool labelRh;
-    public BloodSample BloodSample { private set; get; }
-    private Rigidbody _rigidbody;
+    private TubeSlot _tubeSlot;
+    public BloodSample BloodSample => _tubeSlot.BloodSample;
 
     private void Awake()
     {
-        _rigidbody = GetComponent<Rigidbody>();
+        _tubeSlot = GetComponentInChildren<TubeSlot>();
+    }
+
+    private void Update()
+    {
+        if (BloodSample is not null)
+        {
+            BloodSample.AssumedBloodClass = new BloodClass(labelBloodType, labelRh);
+        }
     }
 
     private void OnCollisionEnter(Collision other)
     {
         if (!other.gameObject.CompareTag("BloodTube")) return;
 
-        BloodSample = other.gameObject.GetComponent<BloodSample>();
-        BloodSample.GetComponent<ObjectAttacher>().AttachToObject(attachPoint, _rigidbody, DetachSample);
-    }
-
-    private void DetachSample()
-    {
-        BloodSample.AssumedBloodClass = new BloodClass(labelBloodType, labelRh);
-        BloodSample = null;
+        _tubeSlot.BloodSample = other.gameObject.GetComponent<BloodSample>();
     }
 }

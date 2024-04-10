@@ -18,9 +18,12 @@ public class ObjectAttacher : MonoBehaviour
 
     public void AttachToObject(Transform transformAttach, Rigidbody rigidbodyAttach, Action onDetach)
     {
-        _fixedJoint = gameObject.AddComponent<FixedJoint>();
-        _fixedJoint.connectedBody = rigidbodyAttach;
-        _rigidbody.isKinematic = true;
+        if (_fixedJoint is null)
+        {
+            _fixedJoint = gameObject.AddComponent<FixedJoint>();
+            _fixedJoint.connectedBody = rigidbodyAttach;
+            _rigidbody.isKinematic = true;
+        }
         
         transform.position = transformAttach.position;
         transform.rotation = transformAttach.rotation;
