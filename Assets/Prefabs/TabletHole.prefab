@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4214581723687026452}
   - component: {fileID: 4249624512438855903}
   m_Layer: 0
-  m_Name: Agglutination
+  m_Name: Stirred
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 426826800721355171}
   - component: {fileID: 6585967890654278580}
   - component: {fileID: 9090958457221708932}
+  - component: {fileID: 5751721904078968866}
   m_Layer: 0
   m_Name: TabletHole
   m_TagString: Tablet Hole
@@ -132,6 +133,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 387dde920165c6043b0b2942d97af639, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dropSound: {fileID: 8300000, guid: 39ef81ba97d8b144fb2b54e7b014c238, type: 3}
+  stirringSound: {fileID: 8300000, guid: 842cd476085bedc4593dd6fe36175999, type: 3}
 --- !u!114 &6585967890654278580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -145,10 +148,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   backgroundImage: {fileID: 6433306620598455994}
-  agglutinatedImage: {fileID: 4249624512438855903}
+  stirredSprite: {fileID: 4249624512438855903}
   agglutinatedSprites:
   - {fileID: 21300000, guid: 49721f35d01e1a04e865012e593b6277, type: 3}
   - {fileID: 21300000, guid: 706a1eb79e7fc884a9e581c012e78c60, type: 3}
+  stirredSprites:
+  - {fileID: 21300000, guid: 9679547d494ad26448d3d77649e73153, type: 3}
   plasmaColor: {r: 1, g: 0.93333334, b: 0, a: 0.44705883}
   formedElements: {r: 0.6117647, g: 0.13333334, b: 0.15686275, a: 1}
   monoclonalColor: {r: 1, g: 0.95686275, b: 0.9098039, a: 0.53333336}
@@ -176,6 +181,102 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.015
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!82 &5751721904078968866
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8079858248091218853}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &8555903352804203081
 GameObject:
   m_ObjectHideFlags: 0
@@ -187,7 +288,7 @@ GameObject:
   - component: {fileID: 5120003533827927376}
   - component: {fileID: 6433306620598455994}
   m_Layer: 0
-  m_Name: NoAgglutination
+  m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

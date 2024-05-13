@@ -1,13 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = System.Random;
 
 [RequireComponent(typeof(TabletHole))]
 public class TabletHoleSprites : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer backgroundImage;
-    [SerializeField] private SpriteRenderer agglutinatedImage;
+    [FormerlySerializedAs("agglutinatedImage")]
+    [SerializeField] private SpriteRenderer stirredSprite;
     [SerializeField] private List<Sprite> agglutinatedSprites;
+    [SerializeField] private List<Sprite> stirredSprites;
     [SerializeField] private Color plasmaColor;
     [SerializeField] private Color formedElements;
     [SerializeField] private Color monoclonalColor;
@@ -16,7 +19,9 @@ public class TabletHoleSprites : MonoBehaviour
     [SerializeField] private Color agglutinatedColor;
     private TabletHole _tabletHole;
     private readonly Random _random = new();
+    private Sprite _selectedStirredSprite;
     private Sprite _selectedAgglutinatedSprite;
+    
 
     private void Awake()
     {
@@ -27,10 +32,10 @@ public class TabletHoleSprites : MonoBehaviour
     {
         bool reagent = false, blood = false;
         var tabletHoleContent = _tabletHole.Content;
+        stirredSprite.gameObject.SetActive(false);
         if (tabletHoleContent.Count == 0)
         {
             backgroundImage.gameObject.SetActive(false);
-            agglutinatedImage.gameObject.SetActive(false);
             return;
         }
         backgroundImage.gameObject.SetActive(true);
@@ -57,14 +62,24 @@ public class TabletHoleSprites : MonoBehaviour
         }
         if (reagent && blood)
         {
-            backgroundImage.color = mixedColor;
+            if (_tabletHole.IsStirred)
+            {
+                stirredSprite.gameObject.SetActive(true);
+                backgroundImage.color = Color.clear;
+                _selectedStirredSprite ??= stirredSprites[_random.Next(stirredSprites.Count)];
+                stirredSprite.sprite = _selectedStirredSprite;
+            }
+            else
+            {
+                backgroundImage.color = mixedColor;
+            }
         }
         if (_tabletHole.IsAgglutinated)
         {
-            agglutinatedImage.gameObject.SetActive(true);
+            stirredSprite.gameObject.SetActive(true);
             backgroundImage.color = agglutinatedColor;
             _selectedAgglutinatedSprite ??= agglutinatedSprites[_random.Next(agglutinatedSprites.Count)];
-            agglutinatedImage.sprite = _selectedAgglutinatedSprite;
+            stirredSprite.sprite = _selectedAgglutinatedSprite;
         }
     }
 }

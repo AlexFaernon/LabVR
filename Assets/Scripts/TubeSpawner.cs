@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TubeSupport : MonoBehaviour
+public class TubeSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject bloodSamplePrefab;
     [SerializeField] private Toggle toggle0;
@@ -29,6 +29,8 @@ public class TubeSupport : MonoBehaviour
 
     private void Update()
     {
+        BlockTogglesInTutorial();
+        
         getButton.interactable = AnyBloodTypeSelected && AnyRhSelected;
     }
 
@@ -77,5 +79,26 @@ public class TubeSupport : MonoBehaviour
         }
 
         return new BloodClass(allowedBloodTypes, allowedRh);
+    }
+
+    private void BlockTogglesInTutorial()
+    {
+        var freeMode = !Tutorial.IsTutorial;
+        
+        toggle0.interactable = freeMode;
+        toggleA.interactable = freeMode;
+        toggleB.interactable = freeMode;
+        toggleAB.interactable = freeMode;
+        toggleRhNeg.interactable = freeMode;
+        toggleRhPos.interactable = freeMode;
+
+        if (freeMode) return;
+
+        toggle0.isOn = false;
+        toggleA.isOn = false;
+        toggleB.isOn = true;
+        toggleAB.isOn = false;
+        toggleRhNeg.isOn = false;
+        toggleRhPos.isOn = true;
     }
 }

@@ -9,6 +9,7 @@ TagManager:
   - Formed Elements
   - Tablet Hole
   - Stirring Rod
+  - Floor
   layers:
   - Default
   - TransparentFX

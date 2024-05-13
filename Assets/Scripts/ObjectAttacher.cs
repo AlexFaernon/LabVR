@@ -8,12 +8,21 @@ public class ObjectAttacher : MonoBehaviour
 {
     private FixedJoint _fixedJoint;
     private Rigidbody _rigidbody;
+    private Transform _transformAttach;
     private Action _onDetach;
 
     private void Awake()
     {
         GetComponent<XRGrabInteractable>().selectEntered.AddListener(Detach);
         _rigidbody = GetComponent<Rigidbody>();
+    }
+
+    private void Update()
+    {
+        if (_transformAttach is null) return;
+
+        transform.position = _transformAttach.position;
+        transform.rotation = _transformAttach.rotation;
     }
 
     public void AttachToObject(Transform transformAttach, Rigidbody rigidbodyAttach, Action onDetach)
@@ -24,9 +33,8 @@ public class ObjectAttacher : MonoBehaviour
             _fixedJoint.connectedBody = rigidbodyAttach;
             _rigidbody.isKinematic = true;
         }
-        
-        transform.position = transformAttach.position;
-        transform.rotation = transformAttach.rotation;
+
+        _transformAttach = transformAttach;
         _onDetach = onDetach;
     }
 
@@ -38,6 +46,7 @@ public class ObjectAttacher : MonoBehaviour
         _onDetach = null;
         Destroy(_fixedJoint);
         _fixedJoint = null;
+        _transformAttach = null;
         _rigidbody.isKinematic = false;
     }
 }

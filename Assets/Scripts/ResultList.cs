@@ -20,7 +20,7 @@ public class ResultList : MonoBehaviour
     [SerializeField] private TMP_Text resultNumberLabel;
     [SerializeField] private Button nextButton;
     [SerializeField] private Button previousButton;
-    private readonly List<(BloodClass, BloodClass)> _results = new();
+    public readonly List<(BloodClass, BloodClass)> Results = new();
     private int _currentResultNumber;
 
     public int CurrentResultNumber
@@ -41,22 +41,22 @@ public class ResultList : MonoBehaviour
 
     private void Update()
     {
-        nextButton.interactable = CurrentResultNumber < _results.Count - 1;
+        nextButton.interactable = CurrentResultNumber < Results.Count - 1;
         previousButton.interactable = CurrentResultNumber > 0;
     }
 
     public void AddResult(BloodSample bloodSample)
     {
-        _results.Insert(0, (bloodSample.AssumedBloodClass, bloodSample.BloodClass));
+        Results.Insert(0, (bloodSample.AssumedBloodClass, bloodSample.BloodClass));
         CurrentResultNumber = 0;
     }
     
     private void SetResultPage()
     {
-        var bloodTypeResult = _results[CurrentResultNumber].Item1.BloodType;
-        var rhResult = _results[CurrentResultNumber].Item1.Rh;
-        var bloodTypeAnswer = _results[CurrentResultNumber].Item2.BloodType;
-        var rhAnswer = _results[CurrentResultNumber].Item2.Rh;
+        var bloodTypeResult = Results[CurrentResultNumber].Item1.BloodType;
+        var rhResult = Results[CurrentResultNumber].Item1.Rh;
+        var bloodTypeAnswer = Results[CurrentResultNumber].Item2.BloodType;
+        var rhAnswer = Results[CurrentResultNumber].Item2.Rh;
         
         bloodTypeResultLabel.text = $"Группа крови: {bloodTypeResult}";
         rhesusResultLabel.text = $"Резус-фактор: {(rhResult ? "Положительный" : "Отрицательный")}";
@@ -66,6 +66,6 @@ public class ResultList : MonoBehaviour
         bloodTypeResultLabel.color = bloodTypeResult == bloodTypeAnswer ? Color.green : Color.red;
         rhesusResultLabel.color = rhResult == rhAnswer ? Color.green : Color.red;
 
-        resultNumberLabel.text = $"{CurrentResultNumber + 1}/{_results.Count}";
+        resultNumberLabel.text = $"{CurrentResultNumber + 1}/{Results.Count}";
     }
 }
