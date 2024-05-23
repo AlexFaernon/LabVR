@@ -21,6 +21,13 @@ public class Centrifuge : MonoBehaviour
 		StartCoroutine(SwitchCap(true));
 		_centrifugeSlots = GetComponentsInChildren<TubeSlot>();
 	}
+	
+	public void StartSeparating()
+	{
+		if (_isSeparating) return;
+		
+		StartCoroutine(SeparateSamples());
+	}
 
 	private void Update()
 	{
@@ -52,13 +59,6 @@ public class Centrifuge : MonoBehaviour
 			centrifugeSlot.BloodSample = other.gameObject.GetComponent<BloodSample>();
 			break;
 		}
-	}
-
-	public void StartSeparating()
-	{
-		if (_isSeparating) return;
-		
-		StartCoroutine(SeparateSamples());
 	}
 
 	private IEnumerator SeparateSamples()

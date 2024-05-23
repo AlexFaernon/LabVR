@@ -29,14 +29,7 @@ public class Pipette : MonoBehaviour
 	{
 		_contentMesh.gameObject.SetActive(Content != DropperContent.None);
 	}
-
-	private void OnTriggerStay(Collider other)
-	{
-		if (!other.CompareTag("Plasma") && !other.CompareTag("Formed Elements")) return;
-
-		_targetTube = other.gameObject;
-	}
-
+	
 	private void Pickup(ActivateEventArgs arg0)
 	{
 		if (_targetTube is null || _dropper.content != DropperContent.None) return;
@@ -56,6 +49,13 @@ public class Pipette : MonoBehaviour
 			default:
 				throw new ArgumentException();
 		}
+	}
+	
+	private void OnTriggerStay(Collider other)
+	{
+		if (!other.CompareTag("Plasma") && !other.CompareTag("Formed Elements")) return;
+
+		_targetTube = other.gameObject;
 	}
 	
 	private void OnTriggerExit(Collider other)

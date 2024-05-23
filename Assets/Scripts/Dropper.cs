@@ -17,10 +17,10 @@ public class Dropper : MonoBehaviour
     {
         GetComponent<XRGrabInteractable>().activated.AddListener(Drop);
     }
-
+    
     private void Drop(ActivateEventArgs arg0)
     {
-        if (_target is null) return;
+        if (_target is null || content == DropperContent.None) return;
 
         _target.GetComponent<TabletHole>().Fill(content, BloodClass);
         dropsLeft--;

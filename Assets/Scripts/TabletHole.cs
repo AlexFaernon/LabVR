@@ -44,7 +44,7 @@ public class TabletHole : MonoBehaviour
         switch (newContent)
         {
             case DropperContent.None:
-                break;
+                throw new ArgumentException("Added empty content");
             case DropperContent.Plasma:
                 Content.Add(newContent);
                 _plasma.Add(bloodClass);
