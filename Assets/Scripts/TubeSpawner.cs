@@ -31,7 +31,10 @@ public class TubeSpawner : MonoBehaviour
     {
         BlockTogglesInTutorial();
         
-        getButton.interactable = AnyBloodTypeSelected && AnyRhSelected;
+        if (!Tutorial.IsTutorial)
+        {
+            getButton.interactable = AnyBloodTypeSelected && AnyRhSelected;
+        }
     }
 
     public void SpawnBloodSampleIfAvailable()
@@ -84,6 +87,11 @@ public class TubeSpawner : MonoBehaviour
     private void BlockTogglesInTutorial()
     {
         var freeMode = !Tutorial.IsTutorial;
+
+        if (freeMode)
+        {
+            getButton.interactable = true;
+        }
         
         toggle0.interactable = freeMode;
         toggleA.interactable = freeMode;

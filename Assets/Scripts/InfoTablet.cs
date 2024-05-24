@@ -79,7 +79,7 @@ public class InfoTablet : MonoBehaviour
 		{
 			CurrentPageNumber++;
 		}
-		else if (value < -0.8f && CurrentPageNumber > 0)
+		else if (value < -0.5f && CurrentPageNumber > 0)
 		{
 			CurrentPageNumber--;
 		}

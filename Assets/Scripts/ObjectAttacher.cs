@@ -49,4 +49,9 @@ public class ObjectAttacher : MonoBehaviour
         _transformAttach = null;
         _rigidbody.isKinematic = false;
     }
+
+    private void OnDestroy()
+    {
+        Detach(null);
+    }
 }

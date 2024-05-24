@@ -33,5 +33,6 @@ public class Checker : MonoBehaviour
         _resultList.gameObject.SetActive(true);
         _resultList.AddResult(bloodSample);
         Destroy(bloodSample.GetComponent<XRGrabInteractable>());
+        Destroy(bloodSample.GetComponent<BloodSample>());
     }
 }

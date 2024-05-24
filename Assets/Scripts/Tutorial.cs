@@ -26,6 +26,11 @@ public class Tutorial : MonoBehaviour
 
     private IEnumerator TutorialSequence()
     {
+        foreach (var bloodSample in FindObjectsOfType<BloodSample>())
+        {
+            Destroy(bloodSample.gameObject);
+        }
+        
         _tubeSpawned = false;
         NextButtonClicked = false;
         tutorialStartWindow.SetActive(false);
@@ -81,6 +86,7 @@ public class Tutorial : MonoBehaviour
         if (IsTutorial)
         {
             _tubeSpawned = true;
+            getTubeButton.interactable = false;
         }
     }
 }

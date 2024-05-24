@@ -15,7 +15,7 @@ public class BloodSample : MonoBehaviour
     [SerializeField] private GameObject cap;
     public bool isSeparated;
     private IEnumerable<Collider> _contentColliders;
-    private TMP_Text _label;
+    private TMP_Text[] _labels;
 
     private void Awake()
     {
@@ -25,8 +25,11 @@ public class BloodSample : MonoBehaviour
             contentCollider.enabled = false;
         }
         GetComponent<XRGrabInteractable>().activated.AddListener(SwitchCap);
-        _label = GetComponentInChildren<TMP_Text>();
-        _label.gameObject.SetActive(false);
+        _labels = GetComponentsInChildren<TMP_Text>();
+        foreach (var label in _labels)
+        {
+            label.gameObject.SetActive(false);
+        }
     }
     
     private void Update()
@@ -35,8 +38,11 @@ public class BloodSample : MonoBehaviour
         separatedContent.SetActive(isSeparated);
         if (AssumedBloodClass is null) return;
 
-        _label.gameObject.SetActive(true);
-        _label.text = $"{AssumedBloodClass.BloodType} Rh{(AssumedBloodClass.Rh ? "+" : "-")}";
+        foreach (var label in _labels)
+        {
+            label.gameObject.SetActive(true);
+            label.text = $"{AssumedBloodClass.BloodType} Rh{(AssumedBloodClass.Rh ? "+" : "-")}";
+        }
     }
 
     private void SwitchCap(ActivateEventArgs arg0)
